@@ -1,0 +1,19 @@
+<p-card header="Welcome back!" subheader="" [style]="{ width: '40vw', margin: '5vh auto 0 auto' }">
+    <ng-template pTemplate="header">
+        <img alt="Card" src="https://primefaces.org/cdn/primeng/images/usercard.png" />
+    </ng-template>
+
+    <form [formGroup]="formLogin">
+        <div style="display: flex; flex-direction: column; row-gap: .5em;">
+            <label for="email" class="block text-900 font-medium mb-2">Email</label>
+            <input formControlName="email" id="email" type="text" pInputText />
+
+            <label for="currentPassword" class="block text-900 font-medium mb-2">Password</label>
+            <input formControlName="currentPassword" id="currentPassword" type="password" suggested="current-password" pInputText />
+        </div>
+    </form>
+
+    <ng-template pTemplate="footer">
+        <p-button label="Sign In" icon="pi pi-user" [style]="{ width: '100%' }" (click)="onSubmit()" [disabled]="!formLogin.valid"></p-button>
+    </ng-template>
+</p-card>
