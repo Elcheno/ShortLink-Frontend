@@ -1,73 +1,26 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ButtonModule } from 'primeng/button';
-import { TabMenuModule } from 'primeng/tabmenu';
+import { Component, effect, inject } from '@angular/core';
+import { AuthService } from '../../services/auth/auth.service';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { HeaderSessionComponent } from '../header-session/header-session.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [ButtonModule, TabMenuModule],
+  imports: [NavbarComponent, HeaderSessionComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit, OnChanges {
+export class HeaderComponent {
 
-  public inSession: boolean = false;
+  private authService = inject(AuthService);
 
-  public itemsWithoutAuth: any[] = [
-    {
-      label: 'Home',
-      icon: 'pi pi-fw pi-home',
-      routerLink: 'home'
-    },
-    {
-      label: 'Links',
-      icon: 'pi pi-fw pi-link',
-      routerLink: 'links'
-    },
-    {
-      label: 'About',
-      icon: 'pi pi-fw pi-info-circle',
-      routerLink: 'about'
-    },
-  ]
+  public inSession: boolean;
 
-  public itemsWithAuth: any[] = [
-    {
-      label: 'Home',
-      icon: 'pi pi-fw pi-home',
-      routerLink: 'home'
-    },
-    {
-      label: 'Links',
-      icon: 'pi pi-fw pi-link',
-      routerLink: 'links'
-    },
-    {
-      label: 'About',
-      icon: 'pi pi-fw pi-info-circle',
-      routerLink: 'about'
-    },
-    {
-      label: 'Register',
-      icon: 'pi pi-fw pi-user-plus',
-      routerLink: 'register'
-    },
-    {
-      label: 'Login',
-      icon: 'pi pi-fw pi-sign-in',
-      routerLink: 'login'
-    }
-  ]
-  
-  constructor() {}
-
-  ngOnChanges(changes: SimpleChanges): void {}
-
-  ngOnInit() {}
-
-  prueba() {
-    this.inSession = !this.inSession;
-    console.log(this.inSession);
+  constructor() {
+    this.inSession = false;
+    effect(async () => {
+      this.inSession = this.authService.session() !== null;
+    })
   }
 
 }

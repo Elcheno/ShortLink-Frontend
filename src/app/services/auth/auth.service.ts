@@ -1,4 +1,4 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({
@@ -8,16 +8,42 @@ export class AuthService {
 
   private http = inject(HttpClient);
 
+  public session = signal(null);
+
   constructor() { }
 
+  public setSession(data: any): void {
+    this.session.set(data);
+  }
+
+  public async loadSession(): Promise<boolean> {
+    return new Promise((resolve, _reject) => {
+      const sessionData = window.localStorage.getItem('sessionData');
+      if (sessionData) {
+        console.log(JSON.parse(sessionData));
+        this.setSession(JSON.parse(sessionData));
+        resolve(true);
+      }
+      resolve(false);
+    })
+  }
+
   public checkSession(): boolean {
-    return true;
+    return this.session() !== null;
   }
 
   public async logout(): Promise<boolean> {
-    return new Promise((resolve, _reject) => {
-      window.localStorage.removeItem('sessionData');
-      resolve(true);
+    return new Promise((resolve, reject) => {
+      try {
+        // window.localStorage.removeItem('sessionData');
+        this.setSession(null);
+        resolve(true);
+
+      } catch (error) {
+        console.error(error);
+        reject(false);
+        
+      }
     });
   }
 

@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, effect, inject } from '@angular/core';
+import { Link } from '../../entitys/Link';
+import { LinkService } from '../../services/link/link.service';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-link-list',
@@ -7,6 +10,25 @@ import { Component } from '@angular/core';
   templateUrl: './link-list.component.html',
   styleUrl: './link-list.component.scss'
 })
-export class LinkListComponent {
+export class LinkListComponent implements OnInit {
+
+  private linkService = inject(LinkService);
+  private authService = inject(AuthService);
+  
+  public linkList: Link[];
+
+  constructor() {
+    this.linkList = [];
+    effect(async () => {
+      if (this.authService.session() !== null) { 
+        this.linkService.getMockListLink()
+          .then(res => this.linkList = res);
+      } else {
+        this.linkList = [];
+      }
+    })
+  }
+  
+  ngOnInit(): void {}
 
 }

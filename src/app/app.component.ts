@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './components/header/header.component';
+import { AuthService } from './services/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,17 @@ import { HeaderComponent } from './components/header/header.component';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'ShortLink';
+
+  private authService = inject(AuthService);
+
+  constructor() {}
+  
+  ngOnInit(): void {
+    this.authService.loadSession();
+    // setTimeout(() => {
+    //   this.authService.setSession(null);
+    // }, 5000);
+  }
 }

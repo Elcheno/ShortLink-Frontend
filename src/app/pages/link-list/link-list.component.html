@@ -1,1 +1,10 @@
 <p>link-list works!</p>
+<ul>
+  @for (link of linkList; track link.id) {
+    <div>
+      <h3>{{ link.url }}</h3>
+      <p>{{ link.shorturl }}</p>
+      <a href="{{ link.shorturl }}" target="_blank" rel="noopener noreferrer">got link</a>
+    </div>
+  }
+</ul>

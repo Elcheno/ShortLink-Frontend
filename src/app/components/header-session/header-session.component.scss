@@ -1,0 +1,64 @@
+.parent {
+  display: flex;
+  justify-content: space-between;
+}
+
+.avatar-parent {
+  display: flex;
+  align-items: center;
+}
+
+.avatar {
+  cursor: pointer;
+}
+
+p-button > button{
+  width: 100% !important;
+}
+
+.user-name {
+  margin: 0;
+}
+
+.btn-github {
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #131313;
+  border: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 17px;
+  padding: 12px;
+  width: 140px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 5px;
+  text-decoration: none;
+ }
+ 
+ .btn-github span {
+  cursor: pointer;
+  position: relative;
+  transition: 0.4s;
+  display: flex;
+  column-gap: .8em;
+  align-items: center;
+ }
+ 
+ .btn-github span:after {
+  content: '»';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -15px;
+  transition: 0.5s;
+ }
+ 
+ .btn-github:hover span {
+  padding-right: 15px;
+ }
+ 
+ .btn-github:hover span:after {
+  opacity: 1;
+  right: 0;
+ }
