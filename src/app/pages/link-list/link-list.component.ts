@@ -2,11 +2,13 @@ import { Component, OnInit, effect, inject } from '@angular/core';
 import { Link } from '../../entitys/Link';
 import { LinkService } from '../../services/link/link.service';
 import { AuthService } from '../../services/auth/auth.service';
+import { DataViewModule } from 'primeng/dataview';
+
 
 @Component({
   selector: 'app-link-list',
   standalone: true,
-  imports: [],
+  imports: [DataViewModule],
   templateUrl: './link-list.component.html',
   styleUrl: './link-list.component.scss'
 })

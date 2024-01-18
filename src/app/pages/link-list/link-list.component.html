@@ -1,10 +1,16 @@
-<p>link-list works!</p>
-<ul>
-  @for (link of linkList; track link.id) {
-    <div>
-      <h3>{{ link.url }}</h3>
-      <p>{{ link.shorturl }}</p>
-      <a href="{{ link.shorturl }}" target="_blank" rel="noopener noreferrer">got link</a>
-    </div>
-  }
-</ul>
+<main>
+  <ul class="link-list-parent">
+    @for (link of linkList; track link.id) {
+      <div>
+        <div class="btn-redirect-parent">
+          <a class="btn-redirect" href="{{ link.url }}" target="_blank rel='noopener noreferrer'">
+            <i class="pi pi-external-link" style="font-size: 1rem"></i>
+          </a>
+        </div>
+
+        <h3>{{ link.name }}</h3>
+        <p>{{ link.shorturl }} <i class="pi pi-copy pointer" style="font-size: 1.1rem"></i></p>
+      </div>
+    }
+  </ul>
+</main>
