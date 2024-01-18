@@ -1,3 +1,9 @@
-<app-header></app-header>
+<app-header-session [inSession]="this.inSession"></app-header-session>
 
-<router-outlet></router-outlet>
+<main>
+  <div class="navbar-parent">
+    <app-navbar [inSession]="this.inSession"></app-navbar>
+  </div>
+  <router-outlet></router-outlet>
+</main>
+
