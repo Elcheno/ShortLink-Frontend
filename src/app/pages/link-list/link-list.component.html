@@ -1,16 +1,92 @@
-<main>
-  <ul class="link-list-parent">
-    @for (link of linkList; track link.id) {
-      <div>
-        <div class="btn-redirect-parent">
-          <a class="btn-redirect" href="{{ link.url }}" target="_blank rel='noopener noreferrer'">
-            <i class="pi pi-external-link" style="font-size: 1rem"></i>
-          </a>
-        </div>
+<main class="flex flex-col py-8 lg:w-3/4 w-11/12 m-auto">
+  <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
 
-        <h3>{{ link.name }}</h3>
-        <p>{{ link.shorturl }} <i class="pi pi-copy pointer" style="font-size: 1.1rem"></i></p>
-      </div>
+    @defer (when linkList) {
+      @for (link of linkList; track index; let index = $index) {
+        <div class="bg-black-light rounded-lg text-white-primary p-4 flex flex-col gap-6 shadow-md hover:shadow-lg transition-shadow">
+
+          <div class="flex justify-between">
+            <h3 class="text-white-primary">{{ link.name }}</h3>
+            <a class="text-orange-dark hover:text-orange-light cursor-pointer transition-colors" href="{{ link.url }}"
+              target="_blank" rel="noopener noreferrer">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-external-link">
+                <path d="M15 3h6v6" />
+                <path d="M10 14 21 3" />
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              </svg>
+            </a>
+          </div>
+
+          <div class="flex gap-2 ">
+            <span class="text-white-primary">{{ link.shorturl }}</span>
+            <span class="text-orange-dark hover:text-orange-light cursor-pointer transition-colors"
+              [cdkCopyToClipboard]="link.shorturl" (click)="copyToClipboard(link.shorturl)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-copy">
+                <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+              </svg>
+            </span>
+            @if (this.clipboard === link.shorturl) {
+              <span class="text-white-primary">
+                Copied!
+              </span>
+            }
+          </div>
+
+          <div>
+            <dropdown
+              [rows]="dropdownData"
+              [data]="link"
+              [triggerStyle]="'color: var(--orange-primary);'"
+            ></dropdown>
+          </div>
+
+        </div>
+      }
+    } @placeholder {
+      <li>
+        <div class="flex gap-2">
+          <div class="w-16 h-16 shrink-0 bg-black-light rounded-full animate-pulse"></div>
+          <div class="w-full space-y-2">
+            <div class="w-11/12 h-7 bg-black-light rounded-2xl animate-pulse"></div>
+            <div class="w-full h-7 bg-black-light rounded-2xl animate-pulse"></div>
+          </div>
+        </div>
+      </li>
+
+      <li>
+        <div class="flex gap-2">
+          <div class="w-16 h-16 shrink-0 bg-black-light rounded-full animate-pulse"></div>
+          <div class="w-full space-y-2">
+            <div class="w-11/12 h-7 bg-black-light rounded-2xl animate-pulse"></div>
+            <div class="w-full h-7 bg-black-light rounded-2xl animate-pulse"></div>
+          </div>
+        </div>
+      </li>
+
+      <li>
+        <div class="flex gap-2">
+          <div class="w-16 h-16 shrink-0 bg-black-light rounded-full animate-pulse"></div>
+          <div class="w-full space-y-2">
+            <div class="w-11/12 h-7 bg-black-light rounded-2xl animate-pulse"></div>
+            <div class="w-full h-7 bg-black-light rounded-2xl animate-pulse"></div>
+          </div>
+        </div>
+      </li>
+
+      <li>
+        <div class="flex gap-2">
+          <div class="w-16 h-16 shrink-0 bg-black-light rounded-full animate-pulse"></div>
+          <div class="w-full space-y-2">
+            <div class="w-11/12 h-7 bg-black-light rounded-2xl animate-pulse"></div>
+            <div class="w-full h-7 bg-black-light rounded-2xl animate-pulse"></div>
+          </div>
+        </div>
+      </li>
     }
   </ul>
 </main>

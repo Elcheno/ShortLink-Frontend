@@ -1,14 +1,10 @@
 import { Component, Input, effect, inject, } from '@angular/core';
-import { AvatarModule } from 'primeng/avatar';
-import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { AuthService } from '../../services/auth/auth.service';
-import { DividerModule } from 'primeng/divider';
-import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-header-session',
   standalone: true,
-  imports: [AvatarModule, OverlayPanelModule, DividerModule, ButtonModule],
+  imports: [],
   templateUrl: './header-session.component.html',
   styleUrl: './header-session.component.scss'
 })

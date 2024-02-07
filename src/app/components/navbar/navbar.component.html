@@ -1,3 +1,31 @@
-<div class="navbar-parent">
-  <p-tabMenu [model]="routes"></p-tabMenu>
-</div>
+<main class="bg-black-light p-3 grid grid-cols-3 justify-between">
+  <section class="flex gap-2 items-center">
+    <a class="cursor-pointer" href="https://github.com/elcheno/shortlink-frontend" target="_blank" rel="noopener noreferrer">
+      <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor" fill="none"
+        viewBox="0 0 24 24" class="w-8 hover:scale-125 duration-200 stroke-black-dark hover:stroke-orange-primary">
+        <path
+          d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+        </path>
+      </svg>
+    </a>
+  </section>
+  <section class="flex gap-4 justify-center">
+    @for (route of routes; track index; let index = $index) {
+      <a [routerLink]="route.path" routerLinkActive="active" class="text-white-primary bg-black-primary
+          hover:border-orange-dark hover:text-orange-dark border-orange-primary border-2 border-opacity-70 rounded-lg
+          transition-colors">
+        <div class=" w-28 px-4 py-1 flex justify-around items-center">
+          <div [innerHTML]="route.icon"></div>
+          <span class="text-md align-middle">
+            {{ route.title }}
+          </span>
+        </div>
+      </a>
+    }
+  </section>
+
+  <section>
+    <!-- AQUI EL CONTROL DE LA SESIÓN-->
+  </section>
+
+</main>

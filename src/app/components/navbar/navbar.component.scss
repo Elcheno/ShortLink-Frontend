@@ -1,0 +1,8 @@
+.active {
+  background-color: var(--orange-primary);
+  color: var(--black-primary);
+}
+
+.active:hover {
+  color: var(--black-primary);
+}
