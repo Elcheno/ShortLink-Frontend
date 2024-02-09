@@ -51,14 +51,54 @@ export class LinkService {
     })
   }
 
+  public getAll (): Observable<ILink[]> {
+    return this.http.get<ILink[]>('http://localhost:8200/shortlink/page')
+      .pipe(
+        map((res: any) => {
+          return res;
+        }),
+        take(1)
+      );
+  }
 
-  public create(data: ILink): Observable<ILink> {
+  public getById (id: string): Observable<ILink> {
+    return this.http.get<ILink>(`http://localhost:8200/shortlink/${id}`)
+      .pipe(
+        map((res: any) => {
+          const response: ILink = { ...res }
+          return response;
+        }),
+        take(1)
+      );
+  }
+
+  public create (data: ILink): Observable<ILink> {
     return this.http.post<ILink>('http://localhost:8200/shortlink', data)
       .pipe(
         map((res: any) => {
-          const response: ILink = {
-            ...res
-          }
+          const response: ILink = { ...res }
+          return response;
+        }),
+        take(1)
+      );
+  }
+
+  public update (data: ILink): Observable<ILink> {
+    return this.http.put<ILink>(`http://localhost:8200/shortlink/${data.id}`, data)
+      .pipe(
+        map((res: any) => {
+          const response: ILink = { ...res }
+          return response;
+        }),
+        take(1)
+      );
+  }
+
+  public delete (id: string): Observable<ILink> {
+    return this.http.delete<ILink>(`http://localhost:8200/shortlink/${id}`)
+      .pipe(
+        map((res: any) => {
+          const response: ILink = { ...res }
           return response;
         }),
         take(1)
