@@ -7,7 +7,16 @@
 
           <div class="flex justify-between">
             <h3 class="text-white-primary">{{ link.name }}</h3>
-            <a class="text-orange-dark hover:text-orange-light cursor-pointer transition-colors" href="{{ link.url }}"
+
+
+            <div class="flex gap-2">
+              <dropdown
+                [rows]="dropdownData"
+                [data]="link"
+                [triggerStyle]="'color: var(--orange-primary);'"
+              ></dropdown>
+
+              <a class="text-orange-dark hover:text-orange-light cursor-pointer transition-colors" href="{{ link.url }}"
               target="_blank" rel="noopener noreferrer">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
@@ -17,12 +26,15 @@
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
               </svg>
             </a>
+            </div>
+
+
           </div>
 
           <div class="flex gap-2 ">
             <span class="text-white-primary">{{ link.shorturl }}</span>
             <span class="text-orange-dark hover:text-orange-light cursor-pointer transition-colors"
-              [cdkCopyToClipboard]="link.shorturl" (click)="copyToClipboard(link.shorturl)">
+              [cdkCopyToClipboard]="link.shorturl ?? ''" (click)="copyToClipboard(link.shorturl ?? '')">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-copy">
@@ -35,14 +47,6 @@
                 Copied!
               </span>
             }
-          </div>
-
-          <div>
-            <dropdown
-              [rows]="dropdownData"
-              [data]="link"
-              [triggerStyle]="'color: var(--orange-primary);'"
-            ></dropdown>
           </div>
 
         </div>

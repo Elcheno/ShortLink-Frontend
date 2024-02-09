@@ -3,20 +3,19 @@
   flex-direction: column;
   min-width: 180px;
   max-width: 280px;
-  background-color: var(--white-secondary);
+  background-color: var(--black-ultralight);
   -webkit-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.1);
   -moz-box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.1);
   box-shadow: 4px 4px 5px 0px rgba(0,0,0,0.1);
   border-radius: 5px;
   padding: 5px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(black-light);
 }
 
 .example-menu-item {
   background-color: transparent;
-  cursor: pointer;
   border: none;
-
+  color: var(--white-primary);
   user-select: none;
   line-height: 36px;
   padding: 4px 12px;
@@ -29,8 +28,8 @@
 }
 
 .example-menu-item:hover {
-  background-color: rgb(235, 235, 235);
   cursor: pointer;
+  background-color: var(--black-light);
 }
 
 .example-menu-item:disabled:hover {

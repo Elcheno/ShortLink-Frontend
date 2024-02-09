@@ -1,14 +1,18 @@
-import { Injectable } from '@angular/core';
-import { Link } from '../../entitys/Link';
+import { Injectable, inject } from '@angular/core';
+import { ILink } from '../../entitys/ILink';
+import { Observable, map, take } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LinkService {
 
+  private readonly http = inject(HttpClient);
+
   constructor() { }
 
-  public async getMockListLink(): Promise<Link[]> {
+  public async getMockListLink(): Promise<ILink[]> {
     return new Promise((resolve, _reject) => {
       setTimeout(() => {
         resolve([
@@ -45,5 +49,19 @@ export class LinkService {
         ]);
       }, 1000);
     })
+  }
+
+
+  public create(data: ILink): Observable<ILink> {
+    return this.http.post<ILink>('http://localhost:8200/shortlink', data)
+      .pipe(
+        map((res: any) => {
+          const response: ILink = {
+            ...res
+          }
+          return response;
+        }),
+        take(1)
+      );
   }
 }

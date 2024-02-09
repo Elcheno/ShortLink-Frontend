@@ -24,8 +24,20 @@
     }
   </section>
 
-  <section>
+  <section class="flex justify-end gap-4">
+
+    <div class="flex content-center">
+      <dropdown
+      [rows]="dropdownData"
+      [triggerStyle]="'border-2 rounded-lg border-orange-primary text-white-primary px-1 align-middle hover:text-orange-dark hover:border-orange-dark transition-colors'"
+      class="flex"
+      ></dropdown>
+    </div>
+
     <!-- AQUI EL CONTROL DE LA SESIÓN-->
+    <div class="h-8 w-8 rounded-full bg-white-primary">
+
+    </div>
   </section>
 
 </main>
