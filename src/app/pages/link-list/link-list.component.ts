@@ -24,6 +24,8 @@ export class LinkListComponent implements OnInit {
 
   public clipboard: string = '';
 
+  public page: number = 0;
+
   public dropdownData: IDropdownData<ILink> = {
     header: 'Link',
     button: {
@@ -83,11 +85,18 @@ export class LinkListComponent implements OnInit {
     }, 4000);
   }
 
-  public getLinks (page: number): void {
+  public async loadMore (): Promise<void> {
+    await this.getLinks(this.page + 1)
+      .then(() => {
+        this.page = this.page + 1;
+      });
+  }
+
+  public async getLinks (page: number): Promise<void>  {
     this.linkService.getAll(page).subscribe(
       (res: any) => {
         if (!res) return;
-        this.linkService.linkList.set(res);
+        this.linkService.linkList.set(this.linkService.linkList().concat(res));
       }
     )
   }
