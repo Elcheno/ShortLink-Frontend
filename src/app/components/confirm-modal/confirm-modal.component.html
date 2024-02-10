@@ -1,0 +1,38 @@
+<div class="relative bg-black-light rounded-lg shadow w-10/12 md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12 m-auto">
+  <!-- Modal content -->
+  <div class="relative rounded-lg shadow">
+    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-black-primary">
+      <h3 class="text-lg font-semibold text-white-primary">
+        Confirmation
+      </h3>
+      <button type="button" (click)="closeModal()"
+        class="text-gray-400 bg-transparent hover:bg-black-primary hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+        <svg class="w-6 h-6 text-white-primary" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M6 18 18 6m0 12L6 6" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Modal body -->
+    <div class="p-4 md:p-5">
+      <div class="flex flex-col mb-4">
+        <p class="block mb-2 text-lg text-white-primary text-center">
+          {{ msg }}
+        </p>
+      </div>
+
+      <div class="flex justify-around">
+        <button (click)="confirmModal()" class="text-black-primary bg-orange-primary py-2 px-4 rounded-lg hover:bg-orange-light flex gap-1 justify-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check"><path d="M20 6 9 17l-5-5"/></svg>
+          Confirm
+        </button>
+        <button (click)="closeModal()" class="text-white-primary bg-black-primary py-2 px-4 rounded-lg hover:bg-black-dark flex gap-1 justify-start">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          Cancel
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

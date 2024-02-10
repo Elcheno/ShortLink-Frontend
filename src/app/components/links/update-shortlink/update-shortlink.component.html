@@ -1,0 +1,42 @@
+<!-- Main modal -->
+<div class="relative bg-black-light rounded-lg shadow w-10/12 md:w-8/12 lg:w-6/12 xl:w-5/12 2xl:w-4/12 m-auto">
+  <!-- Modal content -->
+  <div class="relative rounded-lg shadow">
+    <!-- Modal header -->
+    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-black-primary">
+      <h3 class="text-lg font-semibold text-white-primary">
+        Update New ShortLink
+      </h3>
+      <button type="button" (click)="closeModal()"
+        class="text-gray-400 bg-transparent hover:bg-black-primary hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+        <svg class="w-6 h-6 text-white-primary" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+          viewBox="0 0 24 24">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M6 18 18 6m0 12L6 6" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Modal body -->
+    <form [formGroup]="form" class="p-4 md:p-5" (ngSubmit)="onSubmit()">
+      <div class="flex flex-col mb-4">
+        <p for="email" class="block mb-2 text-sm font-medium text-white-primary">Name</p>
+        <input type="text" placeholder="Write name of ShortLink" formControlName="name"
+            class="bg-black-ultralight border border-black-primary text-white-primary text-sm rounded-lg focus:ring-green-light focus:border-green-light block w-full p-2.5">
+      </div>
+
+      <div class="flex flex-col mb-4">
+        <p for="email" class="block mb-2 text-sm font-medium text-white-primary">Url</p>
+        <input type="text" placeholder="Write link to shorten" formControlName="url"
+            class="bg-black-ultralight border border-black-primary text-white-primary text-sm rounded-lg focus:ring-green-light focus:border-green-light block w-full p-2.5">
+      </div>
+
+      <button type="submit" class="text-black-primary bg-orange-primary py-2 px-4 rounded-lg hover:bg-orange-light">
+        Save ShortLink
+      </button>
+
+
+    </form>
+
+  </div>
+</div>

@@ -3,6 +3,9 @@ import { ILink } from '../../entitys/ILink';
 import { LinkService } from '../../services/link/link.service';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import { DropdownComponent, IDropdownData } from '../../components/dropdown/dropdown.component';
+import { ModalService } from '../../services/modals/modal.service';
+import { UpdateShortlinkComponent } from '../../components/links/update-shortlink/update-shortlink.component';
+import { ConfirmService } from '../../services/modals/confirm.service';
 
 @Component({
   selector: 'app-link-list',
@@ -13,7 +16,9 @@ import { DropdownComponent, IDropdownData } from '../../components/dropdown/drop
 })
 export class LinkListComponent implements OnInit {
 
-  private linkService = inject(LinkService);
+  private readonly linkService = inject(LinkService);
+  private readonly modalService = inject(ModalService);
+  private readonly confirmService = inject(ConfirmService);
   
   public linkList!: ILink[];
 
@@ -35,16 +40,28 @@ export class LinkListComponent implements OnInit {
       },
       {
         title: 'Edit',
-        fnc: (data: any) => {
-          console.log(data);
-          this.copyToClipboard(data.shorturl);
+        fnc: async (data: any) => {
+          (await this.modalService.open(UpdateShortlinkComponent, {
+            ...data
+          })).closed.subscribe(
+            (res: any) => {
+              if (!res) return;
+              console.log(res);
+              this.update(res);
+            }
+          );
         },
         icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-pencil"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>'
       },
       {
         title: 'Remove',
-        fnc: (data: any) => {
-          this.delete(data);
+        fnc: async (data: any) => {
+          (await this.confirmService.open('Are you sure you want to delete this link?')).closed.subscribe(
+            (res: boolean) => {
+              if (!res) return;
+              this.delete(data);
+            }
+          );
         },
         icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-trash-2"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/><line x1="10" x2="10" y1="11" y2="17"/><line x1="14" x2="14" y1="11" y2="17"/></svg>'
       }
@@ -81,6 +98,16 @@ export class LinkListComponent implements OnInit {
       (res: any) => {
         if (!res) return;
         this.linkService.linkList.set(this.linkService.linkList().filter((l: ILink) => l.id !== link.id));
+      }
+    )
+  }
+
+  public update (link: ILink): void {
+    if (!link) return;
+    this.linkService.update(link).subscribe(
+      (res: any) => {
+        if (!res) return;
+        this.linkService.linkList.set(this.linkService.linkList().map((l: ILink) => l.id === link.id ? link : l));
       }
     )
   }
