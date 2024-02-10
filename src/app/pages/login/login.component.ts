@@ -29,12 +29,13 @@ export class LoginComponent {
         email: this.formLogin.value.email,
         password: this.formLogin.value.currentPassword
       }
-      this.authService.login(request)
-        .then(res => {
+
+      this.authService.login(request).subscribe(res => {
+        if (res) {
           console.log(res);
           this.formLogin.reset();
-        })
-        .catch(err => console.error(err));
+        }
+      });
     }
   }
 

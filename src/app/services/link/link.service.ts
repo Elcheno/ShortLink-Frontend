@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { ILink } from '../../entitys/ILink';
 import { Observable, map, take } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 export class LinkService {
 
   private readonly http = inject(HttpClient);
+  private readonly authService = inject(AuthService);
 
   constructor() { }
 
@@ -51,8 +53,10 @@ export class LinkService {
     })
   }
 
-  public getAll (): Observable<ILink[]> {
-    return this.http.get<ILink[]>('http://localhost:8200/shortlink/page')
+  public getAll (page: number): Observable<ILink[]> {
+    const session = this.authService.session();
+    const token = session?.token;
+    return this.http.get<ILink[]>(`http://localhost:8200/link/page/${page}`, { headers: { 'Authorization': `Bearer ${token}` } })
       .pipe(
         map((res: any) => {
           return res;
@@ -62,7 +66,9 @@ export class LinkService {
   }
 
   public getById (id: string): Observable<ILink> {
-    return this.http.get<ILink>(`http://localhost:8200/shortlink/${id}`)
+    const session = this.authService.session();
+    const token = session?.token;
+    return this.http.get<ILink>(`http://localhost:8200/link/${id}`, { headers: { 'Authorization': `Bearer ${token}` } })
       .pipe(
         map((res: any) => {
           const response: ILink = { ...res }
@@ -73,7 +79,9 @@ export class LinkService {
   }
 
   public create (data: ILink): Observable<ILink> {
-    return this.http.post<ILink>('http://localhost:8200/shortlink', data)
+    const session = this.authService.session();
+    const token = session?.token;
+    return this.http.post<ILink>('http://localhost:8200/link', data, { headers: { 'Authorization': `Bearer ${token}` } })
       .pipe(
         map((res: any) => {
           const response: ILink = { ...res }
@@ -84,7 +92,9 @@ export class LinkService {
   }
 
   public update (data: ILink): Observable<ILink> {
-    return this.http.put<ILink>(`http://localhost:8200/shortlink/${data.id}`, data)
+    const session = this.authService.session();
+    const token = session?.token;
+    return this.http.put<ILink>(`http://localhost:8200/link/${data.id}`, data, { headers: { 'Authorization': `Bearer ${token}` } })
       .pipe(
         map((res: any) => {
           const response: ILink = { ...res }
@@ -95,7 +105,9 @@ export class LinkService {
   }
 
   public delete (id: string): Observable<ILink> {
-    return this.http.delete<ILink>(`http://localhost:8200/shortlink/${id}`)
+    const session = this.authService.session();
+    const token = session?.token;
+    return this.http.delete<ILink>(`http://localhost:8200/link/${id}`, { headers: { 'Authorization': `Bearer ${token}` } })
       .pipe(
         map((res: any) => {
           const response: ILink = { ...res }

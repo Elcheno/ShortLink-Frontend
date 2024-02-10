@@ -31,12 +31,13 @@ export class RegisterComponent {
         email: this.formRegister.value.email,
         password: this.formRegister.value.currentPassword
       }
-      this.authService.register(request)
-        .then(res => {
+
+      this.authService.register(request).subscribe(res => {
+        if (res) {
           console.log(res);
           this.formRegister.reset();
-        })
-        .catch(err => console.error(err));
+        }
+      });
     }
   }
 }
