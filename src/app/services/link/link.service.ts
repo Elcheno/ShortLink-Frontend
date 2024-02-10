@@ -1,18 +1,21 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, signal } from '@angular/core';
 import { ILink } from '../../entitys/ILink';
 import { Observable, map, take } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../auth/auth.service';
+import { environment as env } from '../../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LinkService {
 
+  public linkList = signal<ILink[]>([]);
+
   private readonly http = inject(HttpClient);
   private readonly authService = inject(AuthService);
 
-  constructor() { }
+  private mockToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJleHAiOjE3MDgxODk2NTMsImlhdCI6MTcwNzU4NDg1M30.18vHwtOgSwVZ-7tkVvjJHO5BjQWPIBtlHeaLgVl36dA';
 
   public async getMockListLink(): Promise<ILink[]> {
     return new Promise((resolve, _reject) => {
@@ -22,31 +25,31 @@ export class LinkService {
             id: '1',
             name: 'Google',
             url: 'https://google.com',
-            shorturl: 'https://google.com'
+            shortLink: 'https://google.com'
           },
           {
             id: '2',
             name: 'Facebook',
             url: 'https://facebook.com',
-            shorturl: 'https://facebook.com'
+            shortLink: 'https://facebook.com'
           },
           {
             id: '3',
             name: 'Twitter',
             url: 'https://twitter.com',
-            shorturl: 'https://twitter.com'
+            shortLink: 'https://twitter.com'
           },
           {
             id: '4',
             name: 'Github',
             url: 'https://github.com',
-            shorturl: 'https://github.com'
+            shortLink: 'https://github.com'
           },
           {
             id: '5',
             name: 'Youtube',
             url: 'https://youtube.com',
-            shorturl: 'https://youtube.com'
+            shortLink: 'https://youtube.com'
           }
         ]);
       }, 1000);
@@ -54,21 +57,22 @@ export class LinkService {
   }
 
   public getAll (page: number): Observable<ILink[]> {
-    const session = this.authService.session();
-    const token = session?.token;
-    return this.http.get<ILink[]>(`http://localhost:8200/link/page/${page}`, { headers: { 'Authorization': `Bearer ${token}` } })
+    const token = this.authService.session()?.token;
+    return this.http.get<ILink[]>(env.api.url + env.api.link + `/page/${ page }`, { headers: { 'Authorization': `Bearer ${ this.mockToken }` } })
       .pipe(
         map((res: any) => {
-          return res;
+          const response: ILink[] = res.map((item: any) => {
+            return { ...item, shortLink: `${env.api.url}/${item.shortLink}` }
+          })
+          return response;
         }),
         take(1)
       );
   }
 
   public getById (id: string): Observable<ILink> {
-    const session = this.authService.session();
-    const token = session?.token;
-    return this.http.get<ILink>(`http://localhost:8200/link/${id}`, { headers: { 'Authorization': `Bearer ${token}` } })
+    const token = this.authService.session()?.token;
+    return this.http.get<ILink>(env.api.url + env.api.link + `/${ id }`, { headers: { 'Authorization': `Bearer ${ this.mockToken }` } })
       .pipe(
         map((res: any) => {
           const response: ILink = { ...res }
@@ -79,9 +83,8 @@ export class LinkService {
   }
 
   public create (data: ILink): Observable<ILink> {
-    const session = this.authService.session();
-    const token = session?.token;
-    return this.http.post<ILink>('http://localhost:8200/link', data, { headers: { 'Authorization': `Bearer ${token}` } })
+    const token = this.authService.session()?.token;
+    return this.http.post<ILink>(env.api.url + env.api.link, data, { headers: { 'Authorization': `Bearer ${ this.mockToken }` } })
       .pipe(
         map((res: any) => {
           const response: ILink = { ...res }
@@ -92,9 +95,8 @@ export class LinkService {
   }
 
   public update (data: ILink): Observable<ILink> {
-    const session = this.authService.session();
-    const token = session?.token;
-    return this.http.put<ILink>(`http://localhost:8200/link/${data.id}`, data, { headers: { 'Authorization': `Bearer ${token}` } })
+    const token = this.authService.session()?.token;
+    return this.http.put<ILink>(`http://localhost:8200/link/${ data.id }`, data, { headers: { 'Authorization': `Bearer ${ this.mockToken }` } })
       .pipe(
         map((res: any) => {
           const response: ILink = { ...res }
@@ -105,9 +107,8 @@ export class LinkService {
   }
 
   public delete (id: string): Observable<ILink> {
-    const session = this.authService.session();
-    const token = session?.token;
-    return this.http.delete<ILink>(`http://localhost:8200/link/${id}`, { headers: { 'Authorization': `Bearer ${token}` } })
+    const token = this.authService.session()?.token;
+    return this.http.delete<ILink>(`http://localhost:8200/link/${ id }`, { headers: { 'Authorization': `Bearer ${ this.mockToken }` } })
       .pipe(
         map((res: any) => {
           const response: ILink = { ...res }

@@ -32,9 +32,9 @@
           </div>
 
           <div class="flex gap-2 ">
-            <span class="text-white-primary">{{ link.shorturl }}</span>
+            <span class="text-white-primary">{{ link.shortLink }}</span>
             <span class="text-orange-dark hover:text-orange-light cursor-pointer transition-colors"
-              [cdkCopyToClipboard]="link.shorturl ?? ''" (click)="copyToClipboard(link.shorturl ?? '')">
+              [cdkCopyToClipboard]="link.shortLink ?? ''" (click)="copyToClipboard(link.shortLink ?? '')">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                 class="lucide lucide-copy">
@@ -42,7 +42,7 @@
                 <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
               </svg>
             </span>
-            @if (this.clipboard === link.shorturl) {
+            @if (this.clipboard === link.shortLink) {
               <span class="text-white-primary">
                 Copied!
               </span>

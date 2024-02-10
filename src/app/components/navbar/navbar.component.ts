@@ -69,11 +69,11 @@ export class NavbarComponent implements OnInit {
   }
 
   public postShortLink (data: ILink): void {
-    console.log(data);
-    // this.linkService.create(data).subscribe(
-    //   (res) => {
-    //     console.log(res);
-    //   }
-    // );
+    if (!data) return;
+    this.linkService.create(data).subscribe(
+      (res) => {
+        this.linkService.linkList.set([...this.linkService.linkList(), res]);
+      }
+    );
   }
 }

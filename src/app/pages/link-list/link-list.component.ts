@@ -57,11 +57,9 @@ export class LinkListComponent implements OnInit {
   constructor() {
     effect(async () => {
       if (this.authService.session() !== null) { 
-        this.linkService.getMockListLink()
-          .then(res => this.linkList = res);
-      } else {
-        this.linkList = [];
+        this.getLinks(0);
       }
+      this.linkList = this.linkService.linkList();
     })
   }
   
@@ -72,6 +70,15 @@ export class LinkListComponent implements OnInit {
     setTimeout(() => {
       this.clipboard = '';
     }, 4000);
+  }
+
+  public getLinks (page: number): void {
+    this.linkService.getAll(page).subscribe(
+      (res: any) => {
+        if (!res) return;
+        this.linkService.linkList.set(res);
+      }
+    )
   }
 
 }

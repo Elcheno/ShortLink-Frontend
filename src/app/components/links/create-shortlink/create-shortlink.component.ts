@@ -20,7 +20,7 @@ export class CreateShortlinkComponent {
   ) {
     this.form = this.fb.group({
       name: ['', [Validators.required, Validators.minLength(5)]],
-      link: ['', [Validators.required]]
+      url: ['', [Validators.required]]
     });
   }
 
