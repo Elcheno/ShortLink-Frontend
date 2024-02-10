@@ -1,7 +1,6 @@
 import { Component, OnInit, effect, inject } from '@angular/core';
 import { ILink } from '../../entitys/ILink';
 import { LinkService } from '../../services/link/link.service';
-import { AuthService } from '../../services/auth/auth.service';
 import {ClipboardModule} from '@angular/cdk/clipboard';
 import { DropdownComponent, IDropdownData } from '../../components/dropdown/dropdown.component';
 
@@ -15,7 +14,6 @@ import { DropdownComponent, IDropdownData } from '../../components/dropdown/drop
 export class LinkListComponent implements OnInit {
 
   private linkService = inject(LinkService);
-  private authService = inject(AuthService);
   
   public linkList!: ILink[];
 
@@ -56,11 +54,8 @@ export class LinkListComponent implements OnInit {
 
   constructor() {
     effect(async () => {
-      if (this.authService.session() !== null) { 
-        this.getLinks(0);
-      }
       this.linkList = this.linkService.linkList();
-    })
+    });
   }
   
   ngOnInit(): void {}

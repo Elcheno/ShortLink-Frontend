@@ -7,6 +7,7 @@ import { ModalService } from '../../services/modals/modal.service';
 import { CreateShortlinkComponent } from '../links/create-shortlink/create-shortlink.component';
 import { ILink } from '../../entitys/ILink';
 import { LinkService } from '../../services/link/link.service';
+import { environment as env } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-navbar',
@@ -72,7 +73,10 @@ export class NavbarComponent implements OnInit {
     if (!data) return;
     this.linkService.create(data).subscribe(
       (res) => {
-        this.linkService.linkList.set([...this.linkService.linkList(), res]);
+        if (!res) return;
+        console.log(res);
+        const newLink: ILink = { ...res, shortLink: `${env.api.url}/${res.shortLink}` };
+        this.linkService.linkList.set([...this.linkService.linkList(), newLink]);
       }
     );
   }

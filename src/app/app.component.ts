@@ -5,6 +5,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { AuthService } from './services/auth/auth.service';
 import { HeaderSessionComponent } from './components/header-session/header-session.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { LinkService } from './services/link/link.service';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 export class AppComponent implements OnInit {
   title = 'ShortLink';
 
-  private authService = inject(AuthService);
+  private readonly authService = inject(AuthService);
+  private readonly linkService = inject(LinkService);
 
   public inSession: boolean;
 
@@ -32,5 +34,13 @@ export class AppComponent implements OnInit {
     // setTimeout(() => {
     //   this.authService.setSession(null);
     // }, 5000);
+    if (this.authService.session() !== null) {
+      this.linkService.getAll(0).subscribe(
+        (res: any) => {
+          if (!res) return;
+          this.linkService.linkList.set(res);
+        }
+      )
+    }
   }
 }

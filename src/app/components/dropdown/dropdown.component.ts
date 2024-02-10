@@ -49,7 +49,6 @@ export class DropdownComponent {
       ...this.dropdownData.button,
       icon: this.dropdownData.button.icon !== undefined ? this.sanitizer.bypassSecurityTrustHtml(this.dropdownData.button.icon) : ''
     };
-    console.log(this.dropdownData);
     for (const row of this.dropdownData.rows) {
       this.rows.push({
         ...row,
