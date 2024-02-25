@@ -3,3 +3,31 @@
   position: sticky;
   top: 0;
 }
+
+.image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: -1;
+  background-image: url("../assets/img/pruebaBuena2.webp");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-size: 500px;
+
+  opacity: .5;
+}
+
+@media (width < 1024px) {
+  .image {
+    display: none;
+  }
+}
+
+@media (width > 1920px) {
+  .image {
+    background-size: 750px;
+  }
+}
