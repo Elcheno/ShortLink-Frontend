@@ -6,6 +6,7 @@ import { DropdownComponent, IDropdownData } from '../../components/dropdown/drop
 import { ModalService } from '../../services/modals/modal.service';
 import { UpdateShortlinkComponent } from '../../components/links/update-shortlink/update-shortlink.component';
 import { ConfirmService } from '../../services/modals/confirm.service';
+import { ToastService } from '../../services/toast/toast.service';
 
 @Component({
   selector: 'app-link-list',
@@ -19,12 +20,18 @@ export class LinkListComponent implements OnInit {
   private readonly linkService = inject(LinkService);
   private readonly modalService = inject(ModalService);
   private readonly confirmService = inject(ConfirmService);
+  private readonly toastService = inject(ToastService);
   
   public linkList!: ILink[];
 
   public clipboard: string = '';
 
   public page: number = 0;
+
+  public scroll!: any;
+
+  public loaderPagination: boolean = false;
+  public noMorePages: boolean = false;
 
   public dropdownData: IDropdownData<ILink> = {
     header: 'Link',
@@ -35,8 +42,7 @@ export class LinkListComponent implements OnInit {
       {
         title: 'Copy',
         fnc: (data: any) => {
-          console.log(data);
-          this.copyToClipboard(data.shorturl);
+          this.copyToClipboard(data.shortLink);
         },
         icon: '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-link"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>'
       },
@@ -48,7 +54,6 @@ export class LinkListComponent implements OnInit {
           })).closed.subscribe(
             (res: any) => {
               if (!res) return;
-              console.log(res);
               this.update(res);
             }
           );
@@ -71,18 +76,24 @@ export class LinkListComponent implements OnInit {
   }
 
   constructor() {
-    effect(async () => {
+    effect(() => {
       this.linkList = this.linkService.linkList();
+      window.onscroll = () => {
+        this.scroll = window.scrollY;
+      }
     });
   }
   
   ngOnInit(): void {}
 
   public copyToClipboard (clipboardString: string): void {
-    this.clipboard = clipboardString;
-    setTimeout(() => {
-      this.clipboard = '';
-    }, 4000);
+    navigator.clipboard.writeText(clipboardString).then(() => {
+      this.clipboard = clipboardString;
+      this.toastService.showToast('Copied to clipboard', 'success');
+      setTimeout(() => {
+        this.clipboard = '';
+      }, 4000);
+    });
   }
 
   public async loadMore (): Promise<void> {
@@ -93,12 +104,21 @@ export class LinkListComponent implements OnInit {
   }
 
   public async getLinks (page: number): Promise<void>  {
-    this.linkService.getAll(page).subscribe(
-      (res: any) => {
-        if (!res) return;
-        this.linkService.linkList.set(this.linkService.linkList().concat(res));
-      }
-    )
+    this.loaderPagination = true;
+    setTimeout(() => {
+      this.linkService.getAll(page).subscribe(
+        (res: ILink[]) => {
+          this.loaderPagination = false;
+
+          if (!res || res.length === 0) {
+            this.noMorePages = true;
+            return;
+          } 
+
+          this.linkService.linkList.set(this.linkService.linkList().concat(res));
+        }
+      )
+    }, 500);
   }
 
   public delete (link: ILink): void {
@@ -119,6 +139,10 @@ export class LinkListComponent implements OnInit {
         this.linkService.linkList.set(this.linkService.linkList().map((l: ILink) => l.id === link.id ? link : l));
       }
     )
+  }
+
+  public scrollToTop (): void {
+    window.scrollTo(0, 0);
   }
 
 }

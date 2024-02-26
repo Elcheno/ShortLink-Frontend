@@ -15,7 +15,7 @@ export class LinkService {
   private readonly http = inject(HttpClient);
   private readonly authService = inject(AuthService);
 
-  private mockToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJleHAiOjE3MDk0OTc0MTksImlhdCI6MTcwODg5MjYxOH0.GibYttLJp_y6vluKJz0y3ewQ9Zxmrlnex4uNUwv8Rlw';
+  private mockToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJleHAiOjE3MDk1NTM3NTMsImlhdCI6MTcwODk0ODk1M30.qoA9szClHHvftR7LhSe0oHUm3CMOxSBu7N4zQ9hn8Bs';
 
   public async getMockListLink(): Promise<ILink[]> {
     return new Promise((resolve, _reject) => {

@@ -31,6 +31,11 @@ export class AppComponent implements OnInit {
   
   ngOnInit(): void {
     this.authService.loadSession();
+    // this.authService.login({email: 'ruben@example.com', password: 'ruben'}).subscribe((res: any) => {
+    //   console.log(res);
+    // })    // this.authService.login({email: 'ruben@example.com', password: 'ruben'}).subscribe((res: any) => {
+    //   console.log(res);
+    // })
     // setTimeout(() => {
     //   this.authService.setSession(null);
     // }, 5000);

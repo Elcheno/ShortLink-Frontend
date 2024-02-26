@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth/auth.service';
 
@@ -10,24 +10,28 @@ import { AuthService } from '../../services/auth/auth.service';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
+  @ViewChild('inputPassword') inputPassword: any;
 
   private formBuilder = inject(FormBuilder);
   private authService = inject(AuthService);
 
   public formLogin: FormGroup;
 
+  public showPassword: boolean = false;
+
   constructor() {
     this.formLogin = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
-      currentPassword: ['', Validators.required]
-    })
+      password: ['', Validators.required]
+    });
   }
 
   public onSubmit(): void {
+    console.log(this.formLogin)
     if (this.formLogin.valid) {
       const request = {
         email: this.formLogin.value.email,
-        password: this.formLogin.value.currentPassword
+        password: this.formLogin.value.password
       }
 
       this.authService.login(request).subscribe(res => {
@@ -37,6 +41,10 @@ export class LoginComponent {
         }
       });
     }
+  }
+
+  public onShowPassword(): void {
+    this.showPassword = !this.showPassword;
   }
 
 }
