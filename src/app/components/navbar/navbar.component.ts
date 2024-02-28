@@ -84,7 +84,7 @@ export class NavbarComponent implements OnInit {
 
   public dropdownSession: IDropdownData<any> = {
     button: {},
-    header: this.sessionData?.name,
+    header: '',
     rows: [
       {
         title: 'Sing Out',
@@ -106,6 +106,12 @@ export class NavbarComponent implements OnInit {
     effect(() => {
       this.isLogged = this.authService.session() ? true : false;
       this.sessionData = this.authService.session();
+      if (this.isLogged) {
+        this.dropdownSession = {
+          ...this.dropdownSession,
+          header: this.sessionData?.name
+        }
+      }
     });
   }
 
