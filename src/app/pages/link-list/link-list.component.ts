@@ -91,6 +91,7 @@ export class LinkListComponent implements OnInit {
       this.clipboard = clipboardString;
       this.toastService.showToast('Copied to clipboard', 'success');
       setTimeout(() => {
+        if (this.clipboard !== clipboardString) return;
         this.clipboard = '';
       }, 4000);
     });

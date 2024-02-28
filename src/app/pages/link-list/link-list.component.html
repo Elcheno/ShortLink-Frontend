@@ -2,121 +2,127 @@
   <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
 
     @defer (when linkList) {
-      @for (link of linkList; track index; let index = $index) {
-        <div class="bg-black-light rounded-lg text-white-primary p-5 flex flex-col gap-7 3xl:gap-16 shadow-md hover:shadow-lg transition-shadow" 
-          [class]="this.clipboard === link.shortLink ? 'animate-pop' : ''">
+    @for (link of linkList; track index; let index = $index) {
+    <div class="box-content p-4 border-test" [class]="this.clipboard === link.shortLink ? 'border-test-action' : ''">
+      <div
+        class="bg-black-light rounded-lg text-white-primary p-5 flex flex-col gap-7 3xl:gap-16 shadow-md hover:shadow-lg transition-shadow">
 
-          <div class="flex justify-between">
-            <h3 class="text-white-primary max-w-40 overflow-hidden">{{ link.name }}</h3>
+        <div class="flex justify-between">
+          <h3 class="text-white-primary max-w-40 overflow-hidden">{{ link.name }}</h3>
 
-
-            <div class="flex gap-2">
-              <dropdown
-                [rows]="dropdownData"
-                [data]="link"
-                [triggerStyle]="'color: var(--orange-primary);'"
-              ></dropdown>
-
-              <a class="text-orange-dark hover:text-orange-light cursor-pointer transition-colors" href="{{ link.url }}"
-                target="_blank" rel="noopener noreferrer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                  class="lucide lucide-external-link">
-                  <path d="M15 3h6v6" />
-                  <path d="M10 14 21 3" />
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                </svg>
-              </a>
-            </div>
-
-
-          </div>
 
           <div class="flex gap-2">
-            <span class="text-white-primary overflow-hidden text-nowrap ">{{ link.shortLink }}</span>
-            <span class="text-orange-dark hover:text-orange-light cursor-pointer transition-colors"
-              [cdkCopyToClipboard]="link.shortLink ?? ''" (click)="copyToClipboard(link.shortLink ?? '')">
+            <dropdown [rows]="dropdownData" [data]="link" [triggerStyle]="'color: var(--orange-primary);'"></dropdown>
+
+            <a class="text-orange-dark hover:text-orange-light cursor-pointer transition-colors" href="{{ link.url }}"
+              target="_blank" rel="noopener noreferrer">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                class="lucide lucide-copy">
-                <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
-                <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                class="lucide lucide-external-link">
+                <path d="M15 3h6v6" />
+                <path d="M10 14 21 3" />
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
               </svg>
-            </span>
-            @if (this.clipboard === link.shortLink) {
-              <span class="text-white-primary">
-                Copied!
-              </span>
-            }
+            </a>
           </div>
 
+
         </div>
-      }
+
+        <div class="flex gap-2">
+          <span class="text-white-primary overflow-hidden text-nowrap ">{{ link.shortLink }}</span>
+          <span class="text-orange-dark hover:text-orange-light cursor-pointer transition-colors"
+            [cdkCopyToClipboard]="link.shortLink ?? ''" (click)="copyToClipboard(link.shortLink ?? '')">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-copy">
+              <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+            </svg>
+          </span>
+          @if (this.clipboard === link.shortLink) {
+          <span class="text-white-primary">
+            Copied!
+          </span>
+          }
+        </div>
+
+      </div>
+    </div>
+
+    }
 
     } @placeholder {
-      <li>
-        <div class="flex gap-2">
-          <div class="w-16 h-16 shrink-0 bg-black-light rounded-full animate-pulse"></div>
-          <div class="w-full space-y-2">
-            <div class="w-11/12 h-7 bg-black-light rounded-2xl animate-pulse"></div>
-            <div class="w-full h-7 bg-black-light rounded-2xl animate-pulse"></div>
-          </div>
+    <li>
+      <div class="flex gap-2">
+        <div class="w-16 h-16 shrink-0 bg-black-light rounded-full animate-pulse"></div>
+        <div class="w-full space-y-2">
+          <div class="w-11/12 h-7 bg-black-light rounded-2xl animate-pulse"></div>
+          <div class="w-full h-7 bg-black-light rounded-2xl animate-pulse"></div>
         </div>
-      </li>
+      </div>
+    </li>
 
-      <li>
-        <div class="flex gap-2">
-          <div class="w-16 h-16 shrink-0 bg-black-light rounded-full animate-pulse"></div>
-          <div class="w-full space-y-2">
-            <div class="w-11/12 h-7 bg-black-light rounded-2xl animate-pulse"></div>
-            <div class="w-full h-7 bg-black-light rounded-2xl animate-pulse"></div>
-          </div>
+    <li>
+      <div class="flex gap-2">
+        <div class="w-16 h-16 shrink-0 bg-black-light rounded-full animate-pulse"></div>
+        <div class="w-full space-y-2">
+          <div class="w-11/12 h-7 bg-black-light rounded-2xl animate-pulse"></div>
+          <div class="w-full h-7 bg-black-light rounded-2xl animate-pulse"></div>
         </div>
-      </li>
+      </div>
+    </li>
 
-      <li>
-        <div class="flex gap-2">
-          <div class="w-16 h-16 shrink-0 bg-black-light rounded-full animate-pulse"></div>
-          <div class="w-full space-y-2">
-            <div class="w-11/12 h-7 bg-black-light rounded-2xl animate-pulse"></div>
-            <div class="w-full h-7 bg-black-light rounded-2xl animate-pulse"></div>
-          </div>
+    <li>
+      <div class="flex gap-2">
+        <div class="w-16 h-16 shrink-0 bg-black-light rounded-full animate-pulse"></div>
+        <div class="w-full space-y-2">
+          <div class="w-11/12 h-7 bg-black-light rounded-2xl animate-pulse"></div>
+          <div class="w-full h-7 bg-black-light rounded-2xl animate-pulse"></div>
         </div>
-      </li>
+      </div>
+    </li>
 
-      <li>
-        <div class="flex gap-2">
-          <div class="w-16 h-16 shrink-0 bg-black-light rounded-full animate-pulse"></div>
-          <div class="w-full space-y-2">
-            <div class="w-11/12 h-7 bg-black-light rounded-2xl animate-pulse"></div>
-            <div class="w-full h-7 bg-black-light rounded-2xl animate-pulse"></div>
-          </div>
+    <li>
+      <div class="flex gap-2">
+        <div class="w-16 h-16 shrink-0 bg-black-light rounded-full animate-pulse"></div>
+        <div class="w-full space-y-2">
+          <div class="w-11/12 h-7 bg-black-light rounded-2xl animate-pulse"></div>
+          <div class="w-full h-7 bg-black-light rounded-2xl animate-pulse"></div>
         </div>
-      </li>
+      </div>
+    </li>
     }
   </ul>
-  <button 
-    (click)="loadMore()" 
+  <button (click)="loadMore()"
     class="text-black-primary bg-orange-primary py-2 px-4 rounded-lg hover:bg-orange-light flex gap-1 justify-start self-center mt-12 transition-colors disabled:cursor-default disabled:bg-orange-light"
     [disabled]="this.noMorePages">
     @if (loaderPagination) {
-      <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-black-primary" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-      </svg>
+    <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-black-primary" xmlns="http://www.w3.org/2000/svg" fill="none"
+      viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+      <path class="opacity-75" fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z">
+      </path>
+    </svg>
     }
-    {{ 
-      loaderPagination 
-          ? 'Loading...' 
-          : this.noMorePages 
-              ? 'No more links' 
-              : 'Load more' 
+    {{
+    loaderPagination
+    ? 'Loading...'
+    : this.noMorePages
+    ? 'No more links'
+    : 'Load more'
     }}
   </button>
 
   @if (this.scroll && this.scroll !== 0) {
-    <button class="fixed bg-orange-primary hover:bg-orange-light text-white-primary font-bold p-4 rounded-full bottom-4 right-4 md:bottom-16 md:right-16 items-center flex justify-center animate-zoom-in-1" (click)="scrollToTop()">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-up"><path d="m18 15-6-6-6 6"/></svg>
-    </button>
+  <button
+    class="fixed bg-orange-primary hover:bg-orange-light text-white-primary font-bold p-4 rounded-full bottom-4 right-4 md:bottom-16 md:right-16 items-center flex justify-center animate-zoom-in-1"
+    (click)="scrollToTop()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-up">
+      <path d="m18 15-6-6-6 6" />
+    </svg>
+  </button>
   }
 </main>

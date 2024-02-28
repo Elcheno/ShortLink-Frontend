@@ -1,7 +1,6 @@
 import { Component, OnInit, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { HeaderComponent } from './components/header/header.component';
 import { AuthService } from './services/auth/auth.service';
 import { HeaderSessionComponent } from './components/header-session/header-session.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
@@ -26,26 +25,18 @@ export class AppComponent implements OnInit {
     this.inSession = false;
     effect(async () => {
       this.inSession = this.authService.session() !== null;
+      if (this.authService.session() !== null) {
+        this.linkService.getAll(0).subscribe(
+          (res: any) => {
+            if (!res) return;
+            this.linkService.linkList.set(res);
+          }
+        )
+      }
     })
   }
   
   ngOnInit(): void {
     this.authService.loadSession();
-    // this.authService.login({email: 'ruben@example.com', password: 'ruben'}).subscribe((res: any) => {
-    //   console.log(res);
-    // })    // this.authService.login({email: 'ruben@example.com', password: 'ruben'}).subscribe((res: any) => {
-    //   console.log(res);
-    // })
-    // setTimeout(() => {
-    //   this.authService.setSession(null);
-    // }, 5000);
-    if (this.authService.session() !== null) {
-      this.linkService.getAll(0).subscribe(
-        (res: any) => {
-          if (!res) return;
-          this.linkService.linkList.set(res);
-        }
-      )
-    }
   }
 }
