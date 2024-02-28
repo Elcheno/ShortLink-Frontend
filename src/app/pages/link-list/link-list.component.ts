@@ -78,6 +78,9 @@ export class LinkListComponent implements OnInit {
   constructor() {
     effect(() => {
       this.linkList = this.linkService.linkList();
+      if (this.linkList.length === 0) {
+        this.noMorePages = true;
+      }
       window.onscroll = () => {
         this.scroll = window.scrollY;
       }

@@ -58,7 +58,7 @@ export class LinkService {
 
   public getAll (page: number): Observable<ILink[]> {
     const token = this.authService.session()?.token;
-    return this.http.get<ILink[]>(env.api.url + env.api.link + `/page/${ page }`, { headers: { 'Authorization': `Bearer ${ this.mockToken }` } })
+    return this.http.get<ILink[]>(env.api.url + env.api.link + `/page/${ page }`, { headers: { 'Authorization': `Bearer ${ token }` } })
       .pipe(
         map((res: any) => {
           const response: ILink[] = res.map((item: any) => {
@@ -72,7 +72,7 @@ export class LinkService {
 
   public getById (id: string): Observable<ILink> {
     const token = this.authService.session()?.token;
-    return this.http.get<ILink>(env.api.url + env.api.link + `/${ id }`, { headers: { 'Authorization': `Bearer ${ this.mockToken }` } })
+    return this.http.get<ILink>(env.api.url + env.api.link + `/${ id }`, { headers: { 'Authorization': `Bearer ${ token }` } })
       .pipe(
         map((res: any) => {
           const response: ILink = { ...res }
@@ -84,7 +84,7 @@ export class LinkService {
 
   public create (data: ILink): Observable<ILink> {
     const token = this.authService.session()?.token;
-    return this.http.post<ILink>(env.api.url + env.api.link, data, { headers: { 'Authorization': `Bearer ${ this.mockToken }` } })
+    return this.http.post<ILink>(env.api.url + env.api.link, data, { headers: { 'Authorization': `Bearer ${ token }` } })
       .pipe(
         map((res: any) => {
           const response: ILink = { ...res }
@@ -96,7 +96,7 @@ export class LinkService {
 
   public update (data: ILink): Observable<ILink> {
     const token = this.authService.session()?.token;
-    return this.http.put<ILink>(`http://localhost:8200/link/${ data.id }`, data, { headers: { 'Authorization': `Bearer ${ this.mockToken }` } })
+    return this.http.put<ILink>(`http://localhost:8200/link/${ data.id }`, data, { headers: { 'Authorization': `Bearer ${ token }` } })
       .pipe(
         map((res: any) => {
           const response: ILink = { ...res }
@@ -108,7 +108,7 @@ export class LinkService {
 
   public delete (id: string): Observable<ILink> {
     const token = this.authService.session()?.token;
-    return this.http.delete<ILink>(`http://localhost:8200/link/${ id }`, { headers: { 'Authorization': `Bearer ${ this.mockToken }` } })
+    return this.http.delete<ILink>(`http://localhost:8200/link/${ id }`, { headers: { 'Authorization': `Bearer ${ token }` } })
       .pipe(
         map((res: any) => {
           const response: ILink = { ...res }
